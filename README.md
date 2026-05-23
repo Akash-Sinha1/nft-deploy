@@ -1,75 +1,70 @@
 # 🔵 Base NFT Collection Deployer (Launchpad)
 
-An ultra-premium, production-ready, no-code NFT launcher optimized for **Base Mainnet** and **Base Sepolia Testnet**. Creators can deploy secure ERC-721 Drop contracts, upload logo/banner artwork permanently to IPFS, set claim phases (mint prices & supply caps), claim their 1st token, and establish an automated public minting page—**all in under 30 seconds**.
+An ultra-premium, production-ready, no-code NFT launcher optimized for **Base Mainnet** and **Base Sepolia Testnet**. Creators can deploy secure, custom ERC-721 smart contracts, upload logo/banner artwork permanently to IPFS, set claim phases (mint prices & supply caps), and establish an automated public minting page—**all in under 30 seconds**.
 
 ---
 
-## 🚀 Key Features
+## ⚡ Key Features
 
-1. **Wallet Integration**
-   - Seamless one-click connection using **thirdweb v5 ConnectButton**.
+1. **Secure Wallet Integration**
+   - Seamless connection using **Wagmi + RainbowKit**.
    - Immediate support for **Coinbase Wallet**, **MetaMask**, and **WalletConnect**.
-   - Real-time active chain identification and network switcher triggers.
+   - Social/email logins are completely purged to maintain Web3 authenticity.
 
-2. **No-Code ERC-721 Deployment**
-   - High-performance step-by-step deployer utilizing thirdweb's audited **DropERC721** prebuilt smart contracts.
-   - Fully optimized creator settings: Custom Names, Symbols, Descriptions, Max Supply, Mint Prices, and Royalty splits (0% to 10% sliders).
+2. **Custom ERC-721 Smart Contracts**
+   - Streamlined deployment using custom, high-security solidity contracts (`src/data/BaseNFTCollection.sol`).
+   - Fully optimized creator settings: Custom Names, Symbols, Max Supply, Mint Prices, and Owner address management.
 
 3. **Decentralized Storage (IPFS)**
-   - Smooth client-side uploads of logos and banners directly to IPFS, ensuring maximum compatibility with OpenSea, Blur, and standard NFT aggregators.
+   - Upload logo and banner artwork permanently to IPFS (via Pinata API), ensuring seamless compatibility with OpenSea, Coinbase NFT, and all standard marketplaces.
 
 4. **Public Minting Page Generator**
    - Automated creation of public-facing mint endpoints for each collection: `/collection/[contract-address]`.
-   - Beautiful mint cards with live supply progress indicators, quantity modifiers, fee breakdowns, and block explorer shortcuts.
+   - Beautiful mint cards with live supply progress indicators, quantity selectors, fee breakdowns, and block explorer shortcuts.
 
 5. **Creator Management Dashboard**
-   - Absolute control over the smart contract phases: Update pricing, pause/resume public claim conditions, transfer ownership, and withdraw contract proceeds.
+   - Absolute control over the smart contract phases: Update pricing, toggle public claiming states, review collectors, and withdraw contract proceeds directly to your wallet.
 
-6. **Optimized for Virality & Sharing**
-   - Auto-generated Twitter/X templates, copy-to-clipboard minting links, and celebratory canvas-confetti explosions on successfully launched deploys.
-
-7. **Sleek High-End UI/UX**
-   - Dark-mode first premium glassmorphism layouts built using **Tailwind CSS v4** and animated via **Framer Motion**.
-   - Fully responsive on mobile, tablet, and widescreen layouts.
-
-8. **Launchpad Simulator Mode**
-   - An elegant sandbox switch that simulates blockchain uploads, contract deploys, and claims, allowing local review and testing without any active wallet funds.
+6. **Optimized SPA Routing & Prefetching**
+   - Zero hydration lag and <200ms perceived page transition delays.
+   - Programmatic prefetching on Navbar hovers preloads pages instantly.
+   - Dynamic lazy-loading boundaries with shimmering skeleton loading fallbacks.
 
 ---
 
 ## 🛠️ Technology Stack
 
-- **Framework:** Next.js 15.5.18 (App Router, Turbopack)
-- **Styling:** Tailwind CSS v4, shadcn/ui principles
-- **Animations:** Framer Motion
-- **Web3 SDK:** thirdweb SDK v5
-- **EVM Libraries:** wagmi, viem, TanStack React Query
-- **Alerts:** sonner (Toast notifications)
-- **Effects:** canvas-confetti
+- **Framework:** Next.js 15 (App Router, Turbopack)
+- **Styling:** Premium vanilla CSS styling with sleek glassmorphism shadows and subtle light-themed gradients.
+- **EVM Libraries:** Wagmi v2, Viem v2, RainbowKit, TanStack React Query, and Alchemy RPC.
+- **Smart Contracts:** Solidity (`src/data/BaseNFTCollection.sol`).
+- **Effects:** canvas-confetti, dynamic state micro-animations.
 
 ---
 
 ## 📁 Repository Structure
 
 ```
-├── public/                 # Static assets (Favicons, images)
+├── public/                 # Static assets (Favicons, vector graphics)
 ├── src/
-│   ├── app/                # Next.js 15 Pages & Layouts
+│   ├── app/                # Next.js 15 Pages & Layouts (App Router)
 │   │   ├── api/            # API endpoints
-│   │   │   └── collections # GET/POST active collection logs
+│   │   │   ├── collections # Log dynamically deployed collections
+│   │   │   ├── metadata    # IPFS metadata fetchers
+│   │   │   └── upload      # Secure IPFS upload handlers
 │   │   ├── collection/     # Dynamic Public Mint Page routes
 │   │   ├── dashboard/      # Dynamic Creator Dashboard routes
 │   │   ├── deploy/         # Multi-step deployer wizard
-│   │   ├── explorer/       # Collections explorer grid
-│   │   ├── globals.css     # Global styles & Tailwind v4 Theme
+│   │   ├── explorer/       # Streamlined Collections explorer grid
+│   │   ├── globals.css     # Global styles & Light Theme SaaS variables
 │   │   ├── layout.tsx      # Root providers wrapper
-│   │   └── page.tsx        # Viral Landing Page
+│   │   └── page.tsx        # Streamlined Landing Page
 │   ├── components/         # Reusable layouts & visual elements
-│   │   ├── common/         # GlassCard, ConfettiEffect, SocialShare
+│   │   ├── common/         # GlassCard, ConfettiEffect, SkeletonShimmer, SocialShare
 │   │   ├── layout/         # Glassmorphic Navbar & Footer
-│   │   └── providers/      # Thirdweb Provider configuration
-│   ├── data/               # Seed database (JSON)
-│   ├── lib/                # Config files (thirdweb client, utils)
+│   │   └── providers/      # Web3Provider setup (Wagmi, RainbowKit)
+│   ├── data/               # Solidity source, compilation scripts, and active contracts DB
+│   ├── lib/                # Config files (Wagmi config, contract utilities)
 │   └── hooks/              # Custom helper hooks
 ├── .env.example            # Environment variables template
 ├── tsconfig.json           # TypeScript configuration
@@ -86,25 +81,19 @@ Follow these steps to run the Base NFT Deployer locally:
 - **Node.js** version 18.0.0 or higher.
 - **npm** (default package manager).
 
-### 2. Clone and Install Dependencies
-Navigate to the root workspace directory and run:
+### 2. Install Dependencies
 ```bash
 npm install
 ```
 
 ### 3. Supply Environment Variables
 Create a `.env.local` file in the root directory:
-```bash
-cp .env.example .env.local
-```
-Provide your **Thirdweb Client ID** in `.env.local`:
 ```env
-NEXT_PUBLIC_THIRDWEB_CLIENT_ID=your_client_id_here
+NEXT_PUBLIC_ALCHEMY_API_KEY=your_alchemy_api_key
+PINATA_JWT=your_pinata_jwt_token
 ```
-*(Get a free Client ID instantly on the [thirdweb Dashboard](https://thirdweb.com/create-api-key)).*
 
 ### 4. Run Development Server
-Boot up the local dev server using Next's Turbopack engine:
 ```bash
 npm run dev
 ```
@@ -112,18 +101,17 @@ Open **[http://localhost:3000](http://localhost:3000)** in your browser to view 
 
 ---
 
-## 🚀 Production Build & Deployment
+## 🚀 Production Build & Verification
 
 ### 1. Build Verification
-Before deploying to production, compile the build locally to ensure complete type safety and zero errors:
+To compile the build locally and ensure complete type safety with zero compilation errors:
 ```bash
 npm run build
 ```
 
 ### 2. Deploying to Vercel
 This project is fully ready for zero-config deployment on Vercel:
-1. Push the code to a Git repository (GitHub, GitLab, Bitbucket).
+1. Push the code to your GitHub repository.
 2. Connect the repository in the Vercel Dashboard.
-3. Configure the Environment Variables:
-   - Add `NEXT_PUBLIC_THIRDWEB_CLIENT_ID` to Vercel's Environment Variables.
+3. Configure the Environment Variables (`NEXT_PUBLIC_ALCHEMY_API_KEY`, `PINATA_JWT`).
 4. Click **Deploy**. Vercel will build and serve the App Router serverless functions automatically.
