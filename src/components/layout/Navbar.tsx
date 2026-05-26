@@ -11,6 +11,11 @@ export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const navLinks = [
     { name: "Explore", href: "/explorer", icon: Compass },
@@ -60,12 +65,14 @@ export function Navbar() {
 
           {/* Wallet Connect */}
           <div className="hidden md:flex items-center gap-4">
-            <ConnectButton />
+            {mounted && <ConnectButton />}
           </div>
 
           {/* Mobile Menu Button */}
           <div className="flex md:hidden items-center gap-2">
-            <ConnectButton accountStatus="avatar" chainStatus="icon" showBalance={false} />
+            {mounted && (
+              <ConnectButton accountStatus="avatar" chainStatus="icon" showBalance={false} />
+            )}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-50 border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all duration-200"
